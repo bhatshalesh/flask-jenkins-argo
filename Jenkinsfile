@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('flask-app')
+                    sh 'docker build -t flask-app .'
                 }
             }
         }
@@ -13,7 +13,8 @@ pipeline {
         stage('Run Container') {
             steps {
                 script {
-                    docker.image('flask-app').run('-p 5000:5000')
+                    // Use a different port (like 5001) to avoid conflicts
+                    sh 'docker run -d -p 5001:5000 flask-app'
                 }
             }
         }
